@@ -11,6 +11,8 @@ class Encoder(nn.Module):
 	def __init__(self):
 		super(Encoder, self).__init__()
 		self.encoder = nn.Sequential(nn.Linear(2800, 512),nn.PReLU(),nn.Linear(512, 256),nn.PReLU(),nn.Linear(256, 128),nn.PReLU(),nn.Linear(128, 28))
+		# Paper config
+		#3self.encoder = nn.Sequential(nn.Linear(1400, 512), nn.PReLU(), nn.Linear(512, 256), nn.PReLU(), nn.Linear(256, 128),nn.PReLU(), nn.Linear(128, 28))
 			
 	def forward(self, x):
 		x = self.encoder(x)
@@ -20,6 +22,8 @@ class Decoder(nn.Module):
 	def __init__(self):
 		super(Decoder, self).__init__()
 		self.decoder = nn.Sequential(nn.Linear(28, 128),nn.PReLU(),nn.Linear(128, 256),nn.PReLU(),nn.Linear(256, 512),nn.PReLU(),nn.Linear(512, 2800))
+		# Paper config
+		#self.decoder = nn.Sequential(nn.Linear(28, 128), nn.PReLU(), nn.Linear(128, 256), nn.PReLU(), nn.Linear(256, 512),nn.PReLU(), nn.Linear(512, 1400))
 	def forward(self, x):
 		x = self.decoder(x)
 		return x
@@ -57,7 +61,7 @@ def main(args):
 	optimizer = torch.optim.Adagrad(params)
 	total_loss=[]
 	for epoch in range(args.num_epochs):
-		print "epoch" + str(epoch)
+		print("epoch" + str(epoch))
 		avg_loss=0
 		for i in range(0, len(obs), args.batch_size):
 			decoder.zero_grad()
@@ -78,8 +82,8 @@ def main(args):
 			# ===================backward====================
 			loss.backward()
 			optimizer.step()
-		print "--average loss:"
-		print avg_loss/(len(obs)/args.batch_size)
+		print("--average loss:")
+		print(avg_loss/(len(obs)/args.batch_size))
 		total_loss.append(avg_loss/(len(obs)/args.batch_size))
 
 	avg_loss=0
@@ -93,8 +97,8 @@ def main(args):
 		loss = mse_loss(output,inp)
 		avg_loss=avg_loss+loss.data[0]
 		# ===================backward====================
-	print "--Validation average loss:"
-	print avg_loss/(5000/args.batch_size)
+	print("--Validation average loss:")
+	print(avg_loss/(5000/args.batch_size))
 
 
     

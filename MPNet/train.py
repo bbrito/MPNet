@@ -48,11 +48,11 @@ def main(args):
     
 	# Train the Models
 	total_loss=[]
-	print len(dataset)
-	print len(targets)
+	print(len(dataset))
+	print(len(targets))
 	sm=100 # start saving models after 100 epochs
 	for epoch in range(args.num_epochs):
-		print "epoch" + str(epoch)
+		print("epoch" + str(epoch))
 		avg_loss=0
 		for i in range (0,len(dataset),args.batch_size):
 			# Forward, Backward and Optimize
@@ -65,8 +65,8 @@ def main(args):
 			avg_loss=avg_loss+loss.data[0]
 			loss.backward()
 			optimizer.step()
-		print "--average loss:"
-		print avg_loss/(len(dataset)/args.batch_size)
+		print("--average loss:")
+		print(avg_loss/(len(dataset)/args.batch_size))
 		total_loss.append(avg_loss/(len(dataset)/args.batch_size))
 		# Save the models
 		if epoch==sm:
@@ -93,6 +93,11 @@ if __name__ == '__main__':
 	parser.add_argument('--num_epochs', type=int, default=500)
 	parser.add_argument('--batch_size', type=int, default=100)
 	parser.add_argument('--learning_rate', type=float, default=0.0001)
+
+	# Paper parameters
+	#parser.add_argument('--learning_rate', type=float, default=0.1)
+	# Droptout value is missing and it should be set to 0.5
+	# Lammbda is also missing and also 0.5 it is defined in CAE AS 0.01
 	args = parser.parse_args()
 	print(args)
 	main(args)

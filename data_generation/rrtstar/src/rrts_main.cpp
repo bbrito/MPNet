@@ -53,14 +53,14 @@ int publishEnvironment(lcm_t *lcm, region& regionOperating, region& regionGoal, 
 //ofstream out("nodes1", ios::out | ios::binary);
 // double nodes[50000][2];
 string env_path="env";
-mkdir(env_path.c_str(),ACCESSPERMS); // create folder with env label to store generated trajectories
+ // create folder with env label to store generated trajectories
 
 int main () {
     
     double nodes[size][2]; // nodes from obstacle-free space that will become random start-goal pairs
 
     srand (time(0));
-    
+    mkdir(env_path.c_str(),ACCESSPERMS);
   
     /*
 	//-In order to generate random environments, we randomly sample 20 obstacles locations in the workspace, as follow:
